@@ -1,5 +1,4 @@
 <html>
-    <!-- hihuihuihui -->
     <head>
         <title>Manage Users</title>
         <link rel="stylesheet" href="manageuser.css">
@@ -9,7 +8,7 @@
             <h1 class="ViewCandidatesNavHeading">view users</h1>
             <div class="ViewCandidatesNavContainer">
             <a href="adminhome.html">Home</a>
-               
+            
             </div>
         </nav>
         <div class="ViewCandidatesBodyContainer">
