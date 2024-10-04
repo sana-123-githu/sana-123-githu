@@ -27,4 +27,16 @@ if($conn->query($sql)===FALSE)
 {
    die("error creating table: $conn->error");
 }
+
+$sql="CREATE TABLE IF NOT EXISTS login (
+    user_id INT(15) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(20) NOT NULL,
+    usertype boolean default 0,
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE)";
+if($conn->query($sql)===FALSE)
+{
+   die("error creating table: $conn->error");
+}
 ?>

@@ -48,8 +48,8 @@
         <input class="inp1" type="password" name="cnfrmpassword" placeholder="Confirm Password ">
         <img class="img1" alt="">
         </div>
-        <div class="vvv">
-        <input class="inp2" type="submit" name="button" value="Sign in">    
+        <div class="vvv"> 
+        <button class="inp2" name="button" >Sign in</button>   
     </div>
 </form>
     </div>
@@ -58,36 +58,43 @@
 </body>
 </html>
  
-
-
 <?php
 require_once("connect.php");
-if(isset($_POST['button'])){
-$name = $_POST['name'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-$cnpassword = $_POST['cnfrmpassword'];
-$phonenum = $_POST['phonenum'];
-$type=0;
-if($password == $cnpassword)
-{
-$sql = "INSERT INTO `user`(`username`, `phoneno`, `email`, `password`) VALUES ('$name','$phonenum','$email','$password')";
-$data = mysqli_query($con,$sql);
-$sql1="INSERT INTO `login`(`email`, `password`, `usertype`) VALUES ('$email','$password','$type')";
-$data1 = mysqli_query($con,$sql1);
-if($data && $data1){
-echo "<script>alert('Record added')</script>";
-header("Location: signup.php?success=1");
-}
-else{
-echo "<script>alert('Invalid added')</script>";
-}
-}
-else{
-echo "<script>alert('password does not match')</script>";
-}
-}
-else {
-// echo "Invalid form";
+if (isset($_POST['button'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $cnpassword = $_POST['cnfrmpassword'];
+    $phonenum = $_POST['phonenum'];
+    $type = 0;
+
+    if ($password == $cnpassword) {
+        // Insert into user table
+        $sql = "INSERT INTO `user`(`username`, `phoneno`, `email`, `password`) VALUES ('$name', '$phonenum', '$email', '$password')";
+        $data = mysqli_query($conn, $sql);
+        
+        // Check if user was successfully added
+        if ($data) {
+            // Get the user ID of the last inserted record
+            $userId = mysqli_insert_id($conn);
+            
+            // Insert into login table with the user ID
+            $sql1 = "INSERT INTO `login`(`user_id`, `email`, `password`, `usertype`) VALUES  ('$userId', '$email', '$password', '$type')";
+            $data1 = mysqli_query($conn, $sql1);
+            
+            if ($data1) {
+                echo "<script>alert('Record added successfully')</script>";
+                header("Location: signup.php?success=1");
+            } else {
+                echo "<script>alert('Error adding to login table')</script>";
+            }
+        } else {
+            echo "<script>alert('Error adding user')</script>";
+        }
+    } else {
+        echo "<script>alert('Passwords do not match')</script>";
+    }
+} else {
+    // echo "Invalid form";
 }
 ?>

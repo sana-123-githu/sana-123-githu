@@ -28,14 +28,7 @@
 </html>
 
 <?php
-
-$conn = mysqli_connect("localhost", "root", "", "wcr");
-
-
-if (!$conn) {
-    echo "Database not connected.";
-    exit(); 
-}
+require_once("connect.php");
 
 if (isset($_POST['login'])) {
     // Get user inputs
